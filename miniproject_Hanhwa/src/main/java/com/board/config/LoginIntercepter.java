@@ -18,7 +18,7 @@ public class LoginIntercepter implements HandlerInterceptor{
 		HttpSession session=request.getSession();
 		if(session.getAttribute("mdto")==null) {// 로그인X
 			System.out.println("로그인 필요");
-			response.sendRedirect("/user/login");//home.html로 이동
+			response.sendRedirect("/");//home.html로 이동
 			return false;
 		}else {
 			return true;			
