@@ -25,7 +25,7 @@
       text-align: center;
       color: black; 
       font-weight: bold;
-      position: absolute;
+      position: fixed;
       bottom: 0px;
       left: 0px;
       right: 0px;
@@ -39,7 +39,7 @@
 
 
 .loginVal{
-   border:1px solid pink;
+   border:1px solid #6E6E6E;
    width: 288px;
    height: 40px;
    border-radius: 5px;
@@ -67,7 +67,12 @@ button{
 }
 
 button:hover{
-   border:1px solid pink;
-   background-color: pink;
-   color:white;
+   border:1px solid #6E6E6E;
+   background-color: #6E6E6E;
+   color:#FF8000;
 }
+
+#container1{
+      width: 1100px;
+      margin: 0 auto;
+   }

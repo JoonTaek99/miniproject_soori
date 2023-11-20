@@ -33,6 +33,7 @@ public class UserService {
 		
 		return userMapper.addUser(mdto);
 	}
+	
 	public String idChk(String id) {
 		return userMapper.idChk(id);
 	}

@@ -4,14 +4,14 @@
 <mapper namespace="com.board.mapper.FileMapper">
 	
 	<insert id="insertFileBoard" parameterType="fileBoardDto">
-		INSERT INTO FILEINFO
+		INSERT INTO HHFILEINFO
 		VALUES(NULL,#{board_seq},#{origin_filename},#{stored_filename})
 	</insert>
 	
 	<select id="getFileInfo" parameterType="Integer" 
 			resultType="fileBoardDto">
 		SELECT FILE_SEQ, BOARD_SEQ,ORIGIN_FILENAME, STORED_FILENAME
-		FROM FILEINFO
+		FROM HHFILEINFO
 		WHERE FILE_SEQ=#{file_seq}
 	</select>
 </mapper>

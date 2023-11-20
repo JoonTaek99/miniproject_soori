@@ -41,7 +41,7 @@ public class UserController {
 		
 		if(result.hasErrors()) {
 			System.out.println("회원가입 유효값 오류");
-			return "member/addUserForm";
+			return "user/addUserForm";
 		}
 		
 		try {
@@ -77,12 +77,21 @@ public class UserController {
 	public String login(@Validated LoginCommand loginCommand, BindingResult result, Model model, HttpServletRequest request) {
 		if(result.hasErrors()) {
 			System.out.println("로그인 유효값 오류");
-			return "user/main";
+			return "redirect:/home";
 		}
+		
+		
 		
 		String path = userService.login(loginCommand, request, model);
 		
 		return path;
+	}
+	
+	@GetMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		System.out.println("로그아웃ㅂㅂ");
+		request.getSession().invalidate();
+		return "redirect:/";
 	}
 	
 }
