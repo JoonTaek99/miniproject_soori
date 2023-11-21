@@ -21,7 +21,7 @@ function updateEX(){
 <div layout:fragment="content">
 <div id="container">
 <h1>상세보기</h1>
-<form action="/board/boardUpdate" method="post" onsubmit="return updateEX()" th:object="${updateBoardCommand}">
+<form action="/news/newsBoardUpdate" method="post" onsubmit="return updateEX()" th:object="${updateBoardCommand}">
    <input type="hidden" name="board_seq" th:value="${dto.board_seq}" />
    <table class="table">
       <tr>
@@ -61,9 +61,21 @@ function updateEX(){
       </tr>
       <tr>
          <td colspan="2">
-            <button type="submit" class="btn">수정</button>
-            <button type="button" class="btn">삭제</button>
-            <button type="button" class="btn" th:onclick="|location.href='@{/news/boardList}'|">목록</button>
+	         <th:block th:if="${dto.id==session.mdto.id}">
+	            <button type="submit" class="btn">수정</button>
+	         </th:block>
+	         <th:block th:unless="${dto.id==session.mdto.id}">
+	            <button type="submit" class="btn" style="display: none;">수정</button>
+	         </th:block>
+	            <button type="button" class="btn" th:onclick="|location.href='@{/news/boardList}'|">목록</button>
+	         <th:block th:if="${dto.id==session.mdto.id}">
+	         	<button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/news/mulDel(seq=${dto.board_seq})}'|"><span class="glyphicon glyphicon-trash" ></span></button>
+	         </th:block>
+	         <th:block th:unless="${dto.id==session.mdto.id}">
+	         	<button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/news/mulDel(seq=${dto.board_seq})}'|"  style="display: none;"><span class="glyphicon glyphicon-trash" ></span></button>
+	         </th:block>   
+	            
+	            
          </td>
       </tr>
    </table>

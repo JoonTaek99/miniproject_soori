@@ -186,6 +186,20 @@ public class CalController {
       
       return "calboard/calBoardDetail";
    }
+   @PostMapping(value = "/calBoardUpdate")
+   public String calBoardUpdate(@Validated UpdateCalCommand updateCalCommand
+                        ,BindingResult result, HttpServletRequest request
+                        ,Model model) {
+      logger.info("일정 수정하기");
+      if(result.hasErrors()) {
+         System.out.println("수정할 목록을 확인하세요");
+         return "calboard/calBoardDetail";
+      }
+      
+      calService.calBoardUpdate(updateCalCommand);
+      
+      return "redirect:/schedule/calBoardDetail?seq="+updateCalCommand.getSeq();
+   }
 }
 
 

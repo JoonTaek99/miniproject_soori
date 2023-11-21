@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.board.command.NewsDelBoardCommand;
@@ -69,10 +70,18 @@ public class NewsBoardController {
 		return "redirect:/news/boardList";
 	}
 	@GetMapping(value = "/newsBoardDetail")
-	public String boardDetail(int board_seq, Model model) {
+	public String boardDetail(int board_seq, Model model, NewsUpdateBoardCommand newsUpdateBoardCommand) {
 		NewsBoardDto dto = newsBoardService.getBoard(board_seq);
 		model.addAttribute("updateBoardCommand", new NewsUpdateBoardCommand());
 		model.addAttribute("dto",dto);
+		int seq = newsUpdateBoardCommand.getBoard_seq();
+		
+		
+		newsBoardService.readCount(seq);//조회수 증가
+		
+		
+		
+		
 		return "news/newsBoardDetail";
 	}
 	
@@ -97,5 +106,21 @@ public class NewsBoardController {
 		
 		fileService.fileDownload(fdto.getOrigin_filename(),fdto.getStored_filename(),request,response);
 	}
+	
+	@RequestMapping(value="mulDel",method = {RequestMethod.GET, RequestMethod.POST})
+	public String mulDel(@Validated NewsDelBoardCommand delBoardCommand
+						 ,BindingResult result
+			             , Model model) {
+		if(result.hasErrors()) {
+			System.out.println("최소하나 체크하기");
+			List<NewsBoardDto> list=newsBoardService.getAllList();
+			model.addAttribute("list", list);
+			return "news/newsboardList";
+		}
+		newsBoardService.mulDel(delBoardCommand.getSeq());
+		System.out.println("글삭제함");
+		return "redirect:/news/boardList";
+	}
+	
 	
 }

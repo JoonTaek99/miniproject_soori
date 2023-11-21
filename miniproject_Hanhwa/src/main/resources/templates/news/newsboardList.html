@@ -21,25 +21,25 @@ function isCheck(){
 }
 </script>
 <style type="text/css">
-
+th, td{
+	text-align: center;
+}
 </style>
 </head>
 <body>
 <div layout:fragment="content">
-<div id="container2">
+<div id="container">
 <h1>게시판 목록</h1>
-<form action="/news/mulDel" method="post" th:object="${delBoardCommand}">
-	<table class="table">
+<form action="/news/mulDel" method="post" th:object="${delBoardCommand}" >
+	<table class="table table-bordered table-striped col-md-12" id="news" >
 		<tr>
 			<th><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
 			<th>작성자</th>
 			<th>제목</th>
 			<th>작성일</th>
 			<th>조회수</th>
-			<th>삭제여부</th>
-			<th>refer</th>
+			<th>번호</th>
 			<th>step</th>
-			<th>depth</th>
 		</tr>	
 		<th:block th:if="${#lists.isEmpty(list)}">
 			<tr>
@@ -55,17 +55,29 @@ function isCheck(){
 				</td>
 				<td th:text="${#dates.format(dto.regdate, 'yyyy-MM-dd')}"></td>
 				<td th:text="${dto.readCount}"></td>
-				<td th:text="${dto.delflag}"></td>
 				<td th:text="${dto.refer}"></td>
 				<td th:text="${dto.step}"></td>
-				<td th:text="${dto.depth}"></td>
 			</tr>
 		</th:block>
 			<tr>
-				<td colspan="4">
-					<button type="button" class="btn"
+				<td colspan="7">
+					
+							
+					<th:block th:if="${session.mdto.id=='admin'}">
+			            <button type="button" class="btn"
 							th:onclick="|location.href='@{/news/newsBoardInsert}'|">글추가</button>
-					<button type="submit" class="btn">글삭제</button>
+			         </th:block>
+			         <th:block th:unless="${session.mdto.id=='admin'}">
+			            <button type="button" class="btn"
+							th:onclick="|location.href='@{/news/newsBoardInsert}'|" style="display: none;">글추가</button>
+			         </th:block>
+					
+					<th:block th:if="${session.mdto.id=='admin'}">
+			            <button type="submit" class="btn">글삭제</button>
+			         </th:block>
+			         <th:block th:unless="${session.mdto.id=='admin'}">
+			            <button type="submit" class="btn" style="display: none;">글삭제</button>
+			         </th:block>
 					<span th:if="${#fields.hasErrors('seq')}" th:errors="*{seq}"></span>
 				</td>
 				

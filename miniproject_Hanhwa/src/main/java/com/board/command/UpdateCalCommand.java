@@ -5,7 +5,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 //@Data
 public class UpdateCalCommand {
-
+   
+   private String id;
+   
+   public String getId() {
+      return id;
+   }
+   public void setId(String id) {
+      this.id = id;
+   }
    private int seq;
    @NotNull(message = "년도를 입력하세요")
    private int year;
@@ -25,19 +33,10 @@ public class UpdateCalCommand {
       super();
       // TODO Auto-generated constructor stub
    }
-   public UpdateCalCommand(int seq, @NotNull(message = "년도를 입력하세요") int year, @NotNull(message = "월을 입력하세요") int month,
-         @NotNull(message = "일을 입력하세요") int date, @NotNull(message = "시간을 입력하세요") int hour,
-         @NotNull(message = "분을 입력하세요") int min, @NotBlank(message = "제목을 입력하세요") String title,
-         @NotBlank(message = "내용을 입력하세요") String content) {
-      super();
-      this.seq = seq;
-      this.year = year;
-      this.month = month;
-      this.date = date;
-      this.hour = hour;
-      this.min = min;
-      this.title = title;
-      this.content = content;
+   @Override
+   public String toString() {
+      return "UpdateCalCommand [id=" + id + ", seq=" + seq + ", year=" + year + ", month=" + month + ", date=" + date
+            + ", hour=" + hour + ", min=" + min + ", title=" + title + ", content=" + content + "]";
    }
    public int getSeq() {
       return seq;
@@ -87,11 +86,22 @@ public class UpdateCalCommand {
    public void setContent(String content) {
       this.content = content;
    }
-   @Override
-   public String toString() {
-      return "UpdateCalCommand [seq=" + seq + ", year=" + year + ", month=" + month + ", date=" + date + ", hour="
-            + hour + ", min=" + min + ", title=" + title + ", content=" + content + "]";
+   public UpdateCalCommand(String id, int seq, @NotNull(message = "년도를 입력하세요") int year,
+         @NotNull(message = "월을 입력하세요") int month, @NotNull(message = "일을 입력하세요") int date,
+         @NotNull(message = "시간을 입력하세요") int hour, @NotNull(message = "분을 입력하세요") int min,
+         @NotBlank(message = "제목을 입력하세요") String title, @NotBlank(message = "내용을 입력하세요") String content) {
+      super();
+      this.id = id;
+      this.seq = seq;
+      this.year = year;
+      this.month = month;
+      this.date = date;
+      this.hour = hour;
+      this.min = min;
+      this.title = title;
+      this.content = content;
    }
+   
    
    
 }

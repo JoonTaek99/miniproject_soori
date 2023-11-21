@@ -22,7 +22,7 @@ public class NewsInsertBoardCommand {
 	private int refer;
 	private int step;
 	private int depth;
-	private String readCount;
+	private int readCount;
 	
 	public NewsInsertBoardCommand() {
 		super();
@@ -31,7 +31,7 @@ public class NewsInsertBoardCommand {
 
 	public NewsInsertBoardCommand(int seq, String id, @NotBlank(message = "제목 치라") String title,
 			@NotBlank(message = "내용 치라") String content, String delflag, Date regDate, int refer, int step, int depth,
-			String readCount) {
+			int readCount) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -124,11 +124,11 @@ public class NewsInsertBoardCommand {
 		this.depth = depth;
 	}
 
-	public String getReadCount() {
+	public int getReadCount() {
 		return readCount;
 	}
 
-	public void setReadCount(String readCount) {
+	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
 	

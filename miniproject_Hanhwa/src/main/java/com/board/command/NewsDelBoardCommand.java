@@ -29,6 +29,6 @@ public class NewsDelBoardCommand {
 
 	   @Override
 	   public String toString() {
-	      return "DelBoardCommand [seq=" + Arrays.toString(seq) + "]";
+	      return "NewsDelBoardCommand [seq=" + Arrays.toString(seq) + "]";
 	   }
 }

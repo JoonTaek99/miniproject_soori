@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.board.command.NewsDelBoardCommand;
 import com.board.command.NewsInsertBoardCommand;
 import com.board.command.NewsUpdateBoardCommand;
 import com.board.dtos.FileBoardDto;
@@ -73,6 +74,15 @@ public class NewsBoardService {
 					dto.setTitle(updateBoardCommand.getTitle());
 					dto.setContent(updateBoardCommand.getContent());
 					return newsBoardMapper.updateBoard(dto);
+		}
+		
+		public boolean mulDel(String[] seqs) {
+			return newsBoardMapper.mulDel(seqs);
+		}
+		
+		public boolean readCount(int seq) {
+			
+			return newsBoardMapper.readCount(seq);
 		}
 	
 }

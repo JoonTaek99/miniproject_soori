@@ -25,4 +25,9 @@ public interface NewsBoardMapper {
 		
 		// 글 삭제
 		public boolean mulDel(String[] seqs);
+		
+		
+		// 조회수
+		public boolean readCount(int seq);
+		
 }

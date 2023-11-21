@@ -22,7 +22,7 @@
 	
 	
 	<select id="getAllList" resultType="NewsBoardDto">
-		SELECT BOARD_SEQ, ID, TITLE, CONTENT, REGDATE
+		SELECT BOARD_SEQ, ID, TITLE, CONTENT, REGDATE, refer, step, depth, readcount, delflag
 		FROM HHBOARD
 		WHERE DELFLAG = 'N'
 		ORDER BY REGDATE DESC
@@ -59,6 +59,13 @@
 			#{board_seq}
 		</foreach>
 	</update>
+	
+	<update id="readCount" parameterType="int">
+		UPDATE HHBOARD
+		SET readcount=readcount+1
+		WHERE board_seq=#{board_seq}
+	</update>
+	
 </mapper>
 
 

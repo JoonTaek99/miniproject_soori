@@ -58,9 +58,17 @@
          </th:block>
          <tr>
             <td colspan="4">
-              <button type="submit" title="일정삭제" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-trash" ></span>
-                  </button>
+                   <th:block th:if="${session.mdto.id=='admin'}">
+                        <button type="submit" title="일정삭제" class="btn btn-default">
+                        <span class="glyphicon glyphicon-trash" ></span>
+                        </button> 
+                        
+                         
+                  </th:block>
+                  <th:block th:unless="${session.mdto.id=='admin'}">
+                           <button type="submit" title="일정삭제" class="btn btn-default" 
+                        style="display: none;"></button>
+                  </th:block>
                   <button type="button" title="달력보기" class="btn btn-default" 
                            th:onclick="|location.href='@{/schedule/calendar(year=${session.ymdMap.year},month=${session.ymdMap.month})}'|">
                     <span class="glyphicon glyphicon-calendar" ></span>
