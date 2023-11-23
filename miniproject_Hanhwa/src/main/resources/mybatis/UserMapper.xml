@@ -15,8 +15,28 @@
 	<select id="loginUser" parameterType="String" resultType="userDto">
 		SELECT  ID, NAME, PASSWORD, ADDRESS, ROLE
 		FROM HHUSERINFO
+		WHERE ID = #{id} AND ENABLED = 'Y'
+	</select>
+	
+	<select id="userInfo" parameterType="String" resultType="userDto">
+		SELECT ID, NAME, ADDRESS, ROLE
+		FROM HHUSERINFO
 		WHERE ID = #{id}
 	</select>
+	
+	<update id="updateUser" parameterType="userDto">
+		UPDATE HHUSERINFO
+		SET name = #{name}, role = #{role}, address = #{address}
+		WHERE ID = #{id}
+	</update>
+	
+	<update id="delUser" parameterType="String">
+		UPDATE HHUSERINFO
+		SET enabled = 'N'
+		WHERE ID = #{id}
+	</update>
+	
+	
 </mapper>
 
 

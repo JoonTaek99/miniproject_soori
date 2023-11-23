@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 //import com.board.command.DeleteCalCommand;
 import com.board.command.InsertCalCommand;
+import com.board.command.InsertCalReplyCommand;
 //import com.board.command.UpdateCalCommand;
 import com.board.dtos.CalDto;
 import com.board.service.CalService;
@@ -44,7 +45,6 @@ public class CalController {
       logger.info("달력보기"); 
       
       //달력에서 일일별 일정목록 구하기
-      String id="admin";//나중에 세션에서 가져온 아이디 사용
       
       String year=request.getParameter("year");
       String month=request.getParameter("month");
@@ -127,7 +127,6 @@ public class CalController {
    public Map<String,Integer> calCountAjax(String yyyyMMdd){
       logger.info("일정개수");
       Map<String, Integer>map=new HashMap<>();
-      String  id="ljt";
       int count=calService.calBoardCount(yyyyMMdd);
       map.put("count", count);
       return map;
@@ -200,6 +199,36 @@ public class CalController {
       
       return "redirect:/schedule/calBoardDetail?seq="+updateCalCommand.getSeq();
    }
+   
+   @ResponseBody
+   @GetMapping(value = "/addCalReplyBoard")
+   public String addCalReply(@Validated InsertCalReplyCommand insertCalCommand,
+                       BindingResult result) throws Exception {
+      logger.info("댓글추가하기");
+      if(result.hasErrors()) {
+         System.out.println("글을 모두 입력해야 함");
+         return "calboard/calBoardDetail";
+      }
+      logger.info("탈출ㅋ");
+      calService.insertCalReply(insertCalCommand);
+      
+     // return "redirect:/schedule/calBoardDetail";
+      return "zz";
+   }
+   
+   @ResponseBody
+   @GetMapping(value = "/showCalReplyBoard")
+   public Map<String, List<CalDto>> NewsBoardList(@Validated InsertCalReplyCommand insertCalCommand, BindingResult result,  Model model, int seq) throws Exception {
+      System.out.println("댓글 보여주기");
+      List<CalDto> list = calService.showCalReply(seq);
+      Map<String, List<CalDto>> map = new HashMap<>();
+      map.put("list", list);
+
+      model.addAttribute("insertCalCommand", new InsertCalReplyCommand());
+      
+      return map;
+   }
+   
 }
 
 

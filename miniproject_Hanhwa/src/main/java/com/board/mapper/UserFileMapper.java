@@ -7,8 +7,10 @@ import com.board.dtos.UserFileBoardDto;
 @Mapper
 public interface UserFileMapper {
 
-	public boolean insertFileBoard(UserFileMapper dto);
-	
-	public UserFileBoardDto getFileInfo(int file_seq);
-	
+   public boolean insertFileBoard(UserFileBoardDto dto);
+   
+   public UserFileBoardDto getFileInfo(int file_seq);
+
+   
+   
 }

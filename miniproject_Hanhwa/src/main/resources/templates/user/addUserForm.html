@@ -18,13 +18,13 @@ $(function(){
 			data:{"id":id},
 			success:function(data){
 				if(data.id!=null){ // 사용할 수 없는 id
-					$("#idChk").attr("class", "n").css("color","red").text("사용못함ㅋ");
+					$("#idChk").attr("class", "n").css("color","red").text("사용할 수 없습니다.");
 				}else{  // 사용할 수 있는 id
-					$("#idChk").attr("class", "y").css("color","red").text("사용가능ㅇㅇ");
+					$("#idChk").attr("class", "y").css("color","red").text("사용가능합니다.");
 				}
 			},
 			error:function(e){
-				alert("통신오류ㅋ"+e);
+				alert("통신오류"+e);
 			}
 		});
 	});
@@ -33,7 +33,7 @@ $(function(){
 function submitChk(){
 	var classValue = $("#idChk").attr("class");
 	if(classValue=="n"){
-		alert("아이디를 확인좀해라뭐하냐진짜정신좀차려");
+		alert("아이디를 확인하세요");
 		return false;
 	}
 	return true;

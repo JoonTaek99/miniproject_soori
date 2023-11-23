@@ -12,6 +12,8 @@ public class InsertCalCommand {
 
    private int seq;
    
+   private String id;
+   
    @NotBlank(message = "제목을 입력하세요") //문자열만 가능
    private String title;
    @NotBlank(message = "내용을 입력하세요") //문자열만 가능
@@ -34,30 +36,25 @@ public class InsertCalCommand {
       super();
       // TODO Auto-generated constructor stub
    }
-   public InsertCalCommand(int seq,
-         @NotBlank(message = "제목을 입력하세요") String title, @NotBlank(message = "내용을 입력하세요") String content,
-         @NotNull(message = "년도를 입력하세요") int year, @NotNull(message = "월을 입력하세요") int month,
-         @NotNull(message = "일을 입력하세요") int date, @NotNull(message = "시간을 입력하세요") int hour,
-         @NotNull(message = "분을 입력하세요") int min) {
-      super();
-      this.seq = seq;
-
-      this.title = title;
-      this.content = content;
-      this.year = year;
-      this.month = month;
-      this.date = date;
-      this.hour = hour;
-      this.min = min;
-   }
+   
    public int getSeq() {
       return seq;
    }
    public void setSeq(int seq) {
       this.seq = seq;
    }
+   
+   
 
-   public String getTitle() {
+   public String getId() {
+	return id;
+}
+
+public void setId(String id) {
+	this.id = id;
+}
+
+public String getTitle() {
       return title;
    }
    public void setTitle(String title) {
@@ -99,11 +96,28 @@ public class InsertCalCommand {
    public void setMin(int min) {
       this.min = min;
    }
-   @Override
-   public String toString() {
-      return "InsertCalCommand [seq=" + seq + ", title=" + title + ", content=" + content + ", year="
-            + year + ", month=" + month + ", date=" + date + ", hour=" + hour + ", min=" + min + "]";
-   }
+
+public InsertCalCommand(int seq, String id, @NotBlank(message = "제목을 입력하세요") String title,
+		@NotBlank(message = "내용을 입력하세요") String content, @NotNull(message = "년도를 입력하세요") int year,
+		@NotNull(message = "월을 입력하세요") int month, @NotNull(message = "일을 입력하세요") int date,
+		@NotNull(message = "시간을 입력하세요") int hour, @NotNull(message = "분을 입력하세요") int min) {
+	super();
+	this.seq = seq;
+	this.id = id;
+	this.title = title;
+	this.content = content;
+	this.year = year;
+	this.month = month;
+	this.date = date;
+	this.hour = hour;
+	this.min = min;
+}
+
+@Override
+public String toString() {
+	return "InsertCalCommand [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", year="
+			+ year + ", month=" + month + ", date=" + date + ", hour=" + hour + ", min=" + min + "]";
+}
    
    
    

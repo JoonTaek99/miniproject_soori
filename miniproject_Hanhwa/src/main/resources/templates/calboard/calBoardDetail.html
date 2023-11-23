@@ -8,15 +8,63 @@
 <script type="text/javascript">
 function addReply()
 {
+         var seq=parseInt($("input[name=seq]").val());
+         var id=$("input[id=replyId]").val(); // id 입력박스에 입력한 id값 가져오기 value -> val()
+         var content=$("input[name=text]").val();
+         $.ajax({
+            url:"/schedule/addCalReplyBoard",
+            method:"get",
+            dataType:"text",
+            async:false,
+            data:{"seq":seq, "id":id, "content":content},
+            success:function(data){
+            
+            },
+            error:function(e){
+               alert("통신오류ㅋ"+e);
+            }
+         });
+   
+   const addValue= document.getElementById('exampleFormControlTextarea1').value;
+   const li = document.createElement("li");
+   li.setAttribute('id', exampleFormControlTextarea1);
+   const textNode= document.createTextNode(addValue);
+   li.appendChild(textNode);
+   document.getElementById('reply').appendChild(li);
+}
 
-   var str=document.getElementById("exampleFormControlTextarea1").value
-
-   $('input[name=recontent]').attr('value',str);
+function showReply(){
+   
+   var seq=parseInt($("input[name=seq]").val());
+   $.ajax({
+      url:"/schedule/showCalReplyBoard",
+      method:"get",
+      dataType:"json",
+      async:false,
+      data:{"seq":seq},
+      success:function(data){
+         for (var i = 0; i < data.list.length; i++) {
+        	 const addValue= data.list[i].id + " | " + data.list[i].content;
+        	 const li = document.createElement("li");
+        	 li.setAttribute('id', exampleFormControlTextarea1);
+         	 const textNode= document.createTextNode(addValue);
+         	 li.appendChild(textNode);
+         	 document.getElementById('reply').appendChild(li);
+      	}
+      },
+      error:function(e){
+         alert("통신오류ㅋ"+e);
+      }
+   });
+   
    
 }
+
 </script>
 <style type="text/css">
-
+li{
+	list-style:none;
+}
 </style>
 </head>
 <body>
@@ -113,7 +161,7 @@ function addReply()
                   </th:block>
                   <th:block th:unless="${session.mdto.id=='admin'}">
                            <button type="button" title="일정삭제" class="btn btn-default" 
-                        th:onclick="|location.href='@{/schedule/calMulDel(seq=${updateCalCommand.seq})}'|" style="display: none;"><span class="glyphicon glyphicon-trash" ></span></button>
+                        th:onclick="|location.href='@{/schedule/calMulDel(seq=${updateCalCommand.seq})}'|" style="display: none;"></button>
                   </th:block>
                   <button type="button" title="일정목록" class="btn btn-default" 
                         th:onclick="|location.href='@{/schedule/calBoardList}'|">
@@ -136,22 +184,17 @@ function addReply()
                   <div class="form-inline mb-2">
                      <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
                      <input type="text" class="form-control ml-2" id="replyId" th:value="${session.mdto.id}" readonly>
-
                   </div>
-                  <textarea type="text" class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"></textarea>
-                  <button type="button" class="btn btn-dark mt-3" th:onclick="javascript:addReply();">댓글 달기</button>
+                  <input type="text" class="form-control" id="exampleFormControlTextarea1" name="text">
+                  <button id="add" type="button" class="btn btn-dark mt-3" onclick="addReply()">댓글 달기</button>
+                  <button type="button" class="btn btn-dark mt-3" onclick="showReply()">댓글 보기</button>
+                  <br/><br/>
+                  <ul id='reply'></ul>
                    </li>
                </ul>
             </div>
          </div>
-         <tr>
-            <th>댓글</th>
-               <td>
-                  <input class="form-control" name="recontent" rows="10" cols="60" value=""></textarea>
-               </td>
-         </tr>
       </form>
-
    </div>
 </div>
 </body>

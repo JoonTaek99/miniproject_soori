@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 
 import com.board.command.AddUserCommand;
 import com.board.command.LoginCommand;
+import com.board.command.UserUpdateCommand;
 import com.board.dtos.UserDto;
 import com.board.mapper.UserMapper;
 import com.board.status.RoleStatus;
@@ -63,7 +64,32 @@ public class UserService {
 		}
 		
 		return path;
-		}
+	}
+	
+	public UserDto userInfo(LoginCommand loginCommand, HttpServletRequest request) {
+		UserDto udto = (UserDto)request.getSession().getAttribute("mdto");
+		String id = udto.getId();
+		System.out.println(id);
+		return userMapper.userInfo(id);
+		
+	}
+	
+	// 수정하기
+	public boolean updateUser(UserUpdateCommand userUpdateCommand) {
+				UserDto dto = new UserDto();
+				dto.setName(userUpdateCommand.getName());
+				dto.setRole(userUpdateCommand.getRole());
+				dto.setAddress(userUpdateCommand.getAddress());
+				dto.setId(userUpdateCommand.getId());
+				return userMapper.updateUser(dto);
+	}
+	
+	// 탈퇴하기
+	public boolean delUser(LoginCommand loginCommand, HttpServletRequest request) {
+		UserDto udto = (UserDto)request.getSession().getAttribute("mdto");
+		String id = udto.getId();
+		return userMapper.delUser(id);
+}
 	
 }
 

@@ -2,7 +2,7 @@ package com.board.dtos;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias(value = "UserFileBoardDto")
+@Alias(value = "userfileBoardDto")
 public class UserFileBoardDto {
 
 	private int file_seq;

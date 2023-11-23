@@ -84,19 +84,18 @@ public class UserFileService {
       } catch (Exception e) {
          e.printStackTrace();
       }finally {
-		try {
-			out.flush();
-			out.close();
-			fs.close();
-		} catch (Exception e2) {
-			e2.printStackTrace();
-		}
-	}
+      try {
+         out.flush();
+         out.close();
+         fs.close();
+      } catch (Exception e2) {
+         e2.printStackTrace();
+      }
+   }
       
    }
    
 }
-
 
 
 

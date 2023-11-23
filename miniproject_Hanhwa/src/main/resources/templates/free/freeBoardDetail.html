@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 function updateEX(){
-   if(confirm("수정할거임?")){
+   if(confirm("수정하시겠습니까?")){
       return true;
    }
    return false;
@@ -18,7 +18,7 @@ function addReply()
          var id=$("input[id=replyId]").val();
          var content=$("input[name=text]").val();
          $.ajax({
-            url:"/news/addReplyBoard",
+            url:"/free/addReplyBoard",
             method:"get",
             dataType:"text",
             async:false,
@@ -26,7 +26,7 @@ function addReply()
             success:function(data){
             },
             error:function(e){
-               alert("통신오류ㅋ"+e);
+               alert("통신오류"+e);
             }
          });
    
@@ -42,14 +42,14 @@ function showReply(){
    
    var seq=parseInt($("input[name=board_seq]").val());
    $.ajax({
-      url:"/news/showReplyBoard",
+      url:"/free/showReplyBoard",
       method:"get",
       dataType:"json",
       async:false,
       data:{"seq":seq},
       success:function(data){
          for (var i = 0; i < data.list.length; i++) {
-          const addValue= data.list[i].id + " | " + data.list[i].content;
+        	 const addValue= data.list[i].id + " | " + data.list[i].content;
          const li = document.createElement("li");
          li.setAttribute('id', exampleFormControlTextarea1);
           const textNode= document.createTextNode(addValue);
@@ -67,7 +67,7 @@ function showReply(){
 </script>
 <style type="text/css">
 li{
-   list-style:none;
+	list-style:none;
 }
 </style>
 </head>
@@ -75,7 +75,7 @@ li{
 <div layout:fragment="content">
 <div id="container">
 <h1>상세보기</h1>
-<form action="/news/newsBoardUpdate" method="post" onsubmit="return updateEX()" th:object="${updateBoardCommand}">
+<form action="/free/freeBoardUpdate" method="post" onsubmit="return updateEX()" th:object="${updateBoardCommand}">
    <input type="hidden" name="board_seq" th:value="${dto.board_seq}" />
    <table class="table">
       <tr>
@@ -100,7 +100,7 @@ li{
                <th:block th:each="fdto:${dto.fileBoardDto}">
                     <img th:src="@{/upload/{image}(image=${dto.fileBoardDto[0].stored_filename})}"/>
                   <a th:text="${fdto.origin_filename}"
-                   th:href="@{/news/download(file_seq=${fdto.file_seq})}"></a>&nbsp;&nbsp;
+                   th:href="@{/free/download(file_seq=${fdto.file_seq})}"></a>&nbsp;&nbsp;
                </th:block>
             </td>
          </th:block>
@@ -120,12 +120,12 @@ li{
             <th:block th:unless="${dto.id==session.mdto.id}">
                <button type="submit" class="btn" style="display: none;">수정</button>
             </th:block>
-               <button type="button" class="btn" th:onclick="|location.href='@{/news/boardList}'|">목록</button>
-            <th:block th:if="${dto.id==session.mdto.id}">
-               <button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/news/mulDel(seq=${dto.board_seq})}'|"><span class="glyphicon glyphicon-trash" ></span></button>
+               <button type="button" class="btn" th:onclick="|location.href='@{/free/freeboardList}'|">목록</button>
+            <th:block th:if="${dto.id==session.mdto.id} or ${session.mdto.id=='admin'}">
+               <button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/free/mulDel(seq=${dto.board_seq})}'|"><span class="glyphicon glyphicon-trash" ></span></button>
             </th:block>
-            <th:block th:unless="${dto.id==session.mdto.id}">
-               <button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/news/mulDel(seq=${dto.board_seq})}'|"  style="display: none;"><span class="glyphicon glyphicon-trash" ></span></button>
+            <th:block th:unless="${dto.id==session.mdto.id} or ${session.mdto.id=='admin'}">
+               <button type="button" title="삭제" class="btn"  th:onclick="|location.href='@{/free/mulDel(seq=${dto.board_seq})}'|"  style="display: none;"><span class="glyphicon glyphicon-trash" ></span></button>
             </th:block>   
                
                
@@ -146,6 +146,7 @@ li{
                   <input type="text" class="form-control" id="exampleFormControlTextarea1" name="text">
                   <button id="add" type="button" class="btn btn-dark mt-3" onclick="addReply()">댓글 달기</button>
                   <button type="button" class="btn btn-dark mt-3" onclick="showReply()">댓글 보기</button>
+                  <br/><br/>
                   <ul id='reply'></ul>
                    </li>
                </ul>

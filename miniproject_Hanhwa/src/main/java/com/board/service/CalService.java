@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.mapper.CalMapper;
+import com.board.mapper.CalReplyMapper;
 import com.board.command.InsertCalCommand;
+import com.board.command.InsertCalReplyCommand;
 import com.board.utils.Util;
 import com.board.command.UpdateCalCommand;
 import com.board.dtos.CalDto;
@@ -21,6 +23,9 @@ public class CalService {
    
    @Autowired
    private CalMapper calmapper;
+   
+   @Autowired
+   private CalReplyMapper calReplyMapper;
    
    public Map<String, Integer> makeCalendar(HttpServletRequest request){
       Map<String ,Integer> map=new HashMap<>();
@@ -126,4 +131,35 @@ public class CalService {
    public CalDto calBoardDetail(int seq) {
       return calmapper.calBoardDetail(seq);
    }
+   
+   public boolean insertCalReply(InsertCalReplyCommand insertCalCommand) throws Exception {
+	     
+	      CalDto dto=new CalDto();
+	      dto.setSeq(insertCalCommand.getSeq());
+	      dto.setId(insertCalCommand.getId());
+	      dto.setContent(insertCalCommand.getContent());
+	      
+	      int count=calReplyMapper.insertCalReplyBoard(dto);
+	     
+	      return count>0?true:false;
+	   }
+   
+   
+   public List<CalDto> showCalReply(int seq) throws Exception{    
+       return calReplyMapper.getCalReplyBoard(seq);
+   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -51,6 +51,10 @@
       SELECT COUNT(*) FROM hhcalboard
       WHERE SUBSTR(mdate,1,8)=#{yyyyMMdd}
    </select>
+   
+
+   
+   
 </mapper>
 
 

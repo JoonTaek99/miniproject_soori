@@ -8,6 +8,7 @@ import lombok.Data;
 public class CalDto {
 
    private int seq;
+   private String id;
    private String title;
    private String content;
    private String mdate;
@@ -17,6 +18,12 @@ public class CalDto {
    }
    public void setSeq(int seq) {
       this.seq = seq;
+   }
+   public String getId() {
+	   return id;
+   }
+   public void setId(String id) {
+	   this.id = id;
    }
    public String getTitle() {
       return title;
@@ -46,20 +53,21 @@ public class CalDto {
       super();
       // TODO Auto-generated constructor stub
    }
-   public CalDto(int seq, String title, String content, String mdate, Date regdate) {
-      super();
-      this.seq = seq;
-      this.title = title;
-      this.content = content;
-      this.mdate = mdate;
-      this.regdate = regdate;
-   }
-   @Override
-   public String toString() {
-      return "CalDto [seq=" + seq + ", title=" + title + ", content=" + content + ", mdate=" + mdate + ", regdate="
-            + regdate + "]";
-   }
-   
+public CalDto(int seq, String id, String title, String content, String mdate, Date regdate) {
+	super();
+	this.seq = seq;
+	this.id = id;
+	this.title = title;
+	this.content = content;
+	this.mdate = mdate;
+	this.regdate = regdate;
+}
+@Override
+public String toString() {
+	return "CalDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", mdate=" + mdate
+			+ ", regdate=" + regdate + "]";
+}
+  
    
    
    

@@ -39,7 +39,6 @@ th, td{
 			<th>작성일</th>
 			<th>조회수</th>
 			<th>번호</th>
-			<th>step</th>
 		</tr>	
 		<th:block th:if="${#lists.isEmpty(list)}">
 			<tr>
@@ -56,7 +55,6 @@ th, td{
 				<td th:text="${#dates.format(dto.regdate, 'yyyy-MM-dd')}"></td>
 				<td th:text="${dto.readCount}"></td>
 				<td th:text="${dto.refer}"></td>
-				<td th:text="${dto.step}"></td>
 			</tr>
 		</th:block>
 			<tr>
