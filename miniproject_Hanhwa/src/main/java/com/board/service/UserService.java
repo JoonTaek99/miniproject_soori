@@ -51,7 +51,11 @@ public class UserService {
 				System.out.println("패스워드 같음: 회원이 맞음");
 				//session객체에 로그인 정보 저장
 				request.getSession().setAttribute("mdto", dto);
-				return path;
+				System.out.println(dto.getRole());
+				if(dto.getRole().equals("EAGLE")) {
+					System.out.println(loginCommand.getId());
+					path = "user/adminmain";
+				}
 			}else {
 				System.out.println("패스워드 틀림");
 				model.addAttribute("msg", "패스워드를 확인하세요");
@@ -76,12 +80,12 @@ public class UserService {
 	
 	// 수정하기
 	public boolean updateUser(UserUpdateCommand userUpdateCommand) {
-				UserDto dto = new UserDto();
-				dto.setName(userUpdateCommand.getName());
-				dto.setRole(userUpdateCommand.getRole());
-				dto.setAddress(userUpdateCommand.getAddress());
-				dto.setId(userUpdateCommand.getId());
-				return userMapper.updateUser(dto);
+		UserDto dto = new UserDto();
+		dto.setName(userUpdateCommand.getName());
+		dto.setRole(userUpdateCommand.getRole());
+		dto.setAddress(userUpdateCommand.getAddress());
+		dto.setId(userUpdateCommand.getId());
+		return userMapper.updateUser(dto);
 	}
 	
 	// 탈퇴하기
@@ -89,7 +93,7 @@ public class UserService {
 		UserDto udto = (UserDto)request.getSession().getAttribute("mdto");
 		String id = udto.getId();
 		return userMapper.delUser(id);
-}
+	}
 	
 }
 

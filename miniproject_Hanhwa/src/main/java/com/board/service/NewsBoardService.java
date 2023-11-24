@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.board.command.InsertCalReplyCommand;
 import com.board.command.InsertReplyCommand;
-import com.board.command.NewsDelBoardCommand;
 import com.board.command.NewsInsertBoardCommand;
 import com.board.command.NewsUpdateBoardCommand;
-import com.board.dtos.CalDto;
 import com.board.dtos.FileBoardDto;
 import com.board.dtos.NewsBoardDto;
 import com.board.mapper.FileMapper;

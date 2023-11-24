@@ -29,7 +29,7 @@ th, td{
 <body>
 <div layout:fragment="content">
 <div id="container">
-<h1>게시판 목록</h1>
+<h1>자유게시판</h1>
 <form action="/free/mulDel" method="post" th:object="${delBoardCommand}" >
    <table class="table table-bordered table-striped col-md-12" id="news" >
       <tr>
@@ -43,7 +43,7 @@ th, td{
       </tr>   
       <th:block th:if="${#lists.isEmpty(list)}">
          <tr>
-            <td colspan="4" style="text-align: center;">---작성된 글이 없어유---</td>
+            <td colspan="7" style="text-align: center;">---작성된 글이 없어유---</td>
          </tr>
       </th:block>
       <th:block th:unless="${#lists.isEmpty(list)}">
@@ -61,14 +61,9 @@ th, td{
       </th:block>
          <tr>
             <td colspan="7">
-               
-                     
-
                      <button type="button" class="btn"
                      th:onclick="|location.href='@{/free/freeBoardInsert}'|">글추가</button>
-
                      <button type="submit" class="btn">글삭제</button>
-
                <span th:if="${#fields.hasErrors('seq')}" th:errors="*{seq}"></span>
             </td>
             
