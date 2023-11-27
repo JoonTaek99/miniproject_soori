@@ -1,6 +1,7 @@
 package com.board.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
 	
 	@GetMapping(value = "/addUser")
 	public String addUserForm(Model model) {
@@ -126,7 +128,15 @@ public class UserController {
 		return "home";
 	}
 	
-	
+	@GetMapping(value = "/allUserList")
+	public String allUserList(Model model, LoginCommand loginCommand, HttpServletRequest request) {
+		System.out.println("유저리스트로 이동");
+		List<UserDto> list = userService.getAllUserList();
+		
+		model.addAttribute("list", list);
+		
+		return "user/adminAllUserList";
+	}
 	
 }
 

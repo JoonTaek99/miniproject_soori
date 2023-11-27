@@ -59,6 +59,21 @@ th, td{
 
          </tr>
       </th:block>
+      <tr>
+         <td colspan="10" style="text-align: center;">
+            <!-- 페이징 처리부분 시작 -->
+            <nav>
+              <ul class="pagination">
+                <li ><a th:href="@{/free/freeboardList(pnum=${pMap.prePageNum})}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <th:block th:each="i:${#numbers.sequence(pMap.startPage,pMap.endPage)}">
+                   <li th:class="${session.pnum}==${i}?'active':''"><a th:href="@{/free/freeboardLists(pnum=${i})}">[[${i}]]<span class="sr-only">(current)</span></a></li>
+                </th:block> 
+                <li ><a th:href="@{/free/freeboardList(pnum=${pMap.nextPageNum})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+              </ul>
+            </nav>
+            <!-- 페이징 처리부분 종료 -->
+         </td>
+      </tr>
          <tr>
             <td colspan="7">
                      <button type="button" class="btn"

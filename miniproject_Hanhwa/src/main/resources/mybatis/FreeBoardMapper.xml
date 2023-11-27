@@ -21,11 +21,23 @@
    </resultMap>
    
    
-   <select id="getAllList" resultType="FreeBoardDto">
-      SELECT BOARD_SEQ, ID, TITLE, CONTENT, REGDATE, refer, step, depth, readcount, delflag
-      FROM HHUSERBOARD
-      WHERE DELFLAG = 'N'
-      ORDER BY REGDATE DESC
+   <select id="getAllList" parameterType="map" resultType="FreeBoardDto">
+      SELECT rn,BOARD_SEQ, ID, TITLE, CONTENT, REGDATE, refer, step, depth, readcount, delflag
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY refer DESC,step) rn,
+                   board_seq, id, title, content,                         regdate,refer,step,depth,
+                   readcount,delflag
+               FROM hhuserboard) a
+      <where>
+         <choose>
+            <when test="board_seq!=null">
+               AND board_seq=#{board_seq}
+            </when>
+            <otherwise>
+               AND CEIL(rn/10)=#{pnum} AND DELFLAG = 'N'
+            </otherwise>
+         </choose>
+   </where> 
+      ORDER BY board_seq DESC
    </select>
    
    <select id="getBoard" parameterType="Integer" resultMap="FreeBoardDtoMap">
@@ -65,6 +77,12 @@
       SET readcount=readcount+1
       WHERE board_seq=#{board_seq}
    </update>
+   
+     <select id="getPCount" resultType="int">
+      SELECT CEIL(COUNT(*)/10) pageCount 
+      FROM HHUSERBOARD
+      WHERE DELFLAG = "N"
+   </select>
    
 </mapper>
 

@@ -1,7 +1,9 @@
 package com.board.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,11 @@ public class FreeBoardService {
    private UserFileService userFileService;
    @Autowired
    private FreeBoardReplyMapper freeBoardReplyMapper;
-   public List<FreeBoardDto> getAllList(){
-         return freeBoardMapper.getAllList();
+   
+   public List<FreeBoardDto> getAllList(String pnum){
+	   Map<String,String>map=new HashMap<>();
+	      map.put("pnum", pnum);
+         return freeBoardMapper.getAllList(map);
       }
       
       //글 추가, 파일 업로드 및 파일 정보 추가
@@ -103,4 +108,10 @@ public class FreeBoardService {
        public List<FreeBoardDto> showReply(int seq) throws Exception{    
            return freeBoardReplyMapper.showReplyBoard(seq);
        }
+       
+       public int getPCount() {
+    	      // TODO Auto-generated method stub
+    	      return freeBoardMapper.getPCount();
+    	   }
+       
 }

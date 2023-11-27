@@ -1,7 +1,11 @@
 package com.board.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,8 @@ import com.board.mapper.NewsBoardReplyMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+
+
 @Service
 public class NewsBoardService {
 
@@ -30,8 +36,10 @@ public class NewsBoardService {
    @Autowired
    private NewsBoardReplyMapper newsBoardReplyMapper;
    
-   public List<NewsBoardDto> getAllList(){
-      return newsBoardMapper.getAllList();
+   public List<NewsBoardDto> getAllList(String pnum){
+      Map<String,String>map=new HashMap<>();
+      map.put("pnum", pnum);
+      return newsBoardMapper.getAllList(map);
    }
    
    //글 추가, 파일 업로드 및 파일 정보 추가
@@ -102,9 +110,12 @@ public class NewsBoardService {
     public List<NewsBoardDto> showReply(int seq) throws Exception{    
         return newsBoardReplyMapper.showReplyBoard(seq);
     }
+
+   public int getPCount() {
+      // TODO Auto-generated method stub
+      return newsBoardMapper.getPCount();
+   }
 }
-
-
 
 
 

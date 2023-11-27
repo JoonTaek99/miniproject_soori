@@ -29,9 +29,11 @@ import com.board.dtos.NewsBoardDto;
 import com.board.dtos.UserFileBoardDto;
 import com.board.service.FreeBoardService;
 import com.board.service.UserFileService;
+import com.board.utils.Paging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value="/free")
@@ -44,9 +46,29 @@ public class FreeBoardController {
    private UserFileService userfileService;
    
    @GetMapping(value="/freeboardList")
-   public String FreeBoardList(Model model) {
+   public String FreeBoardList(Model model,HttpServletRequest request,HttpServletResponse response,String pnum) {
       System.out.println("글목록 보기");
-      List<FreeBoardDto> list=freeBoardService.getAllList();
+      
+      HttpSession session=request.getSession();
+      if(pnum==null) {
+         pnum=(String)session.getAttribute("pnum");//현재 조회중인 페이지번호
+      }else {
+         //새로 페이지를 요청할 경우 세션에 저장
+         session.setAttribute("pnum", pnum);
+      }
+     //페이지 수 구하기 
+      int pcount=freeBoardService.getPCount();
+     model.addAttribute("pcount", pcount);
+            
+     //---페이지에 페이징 처리 기능 추가
+     //필요한 값: 페이지수, 페이지번호, 페이지범위(페이지수)
+     Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 10);
+     model.addAttribute("pMap", map);
+      
+      
+      
+      
+      List<FreeBoardDto> list=freeBoardService.getAllList(pnum);
       model.addAttribute("list", list);
       model.addAttribute("delBoardCommand", new NewsDelBoardCommand());
       
@@ -109,10 +131,10 @@ public class FreeBoardController {
       @RequestMapping(value="mulDel",method = {RequestMethod.GET, RequestMethod.POST})
       public String mulDel(@Validated NewsDelBoardCommand delBoardCommand
                       ,BindingResult result
-                         , Model model) {
+                         , Model model,String pnum) {
          if(result.hasErrors()) {
             System.out.println("최소하나 체크하기");
-            List<FreeBoardDto> list=freeBoardService.getAllList();
+            List<FreeBoardDto> list=freeBoardService.getAllList(pnum);
             model.addAttribute("list", list);
             return "free/freeboardList";
          }

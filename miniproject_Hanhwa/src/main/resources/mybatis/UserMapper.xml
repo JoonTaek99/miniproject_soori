@@ -36,6 +36,11 @@
 		WHERE ID = #{id}
 	</update>
 	
+	<select id="getAllUserList" resultType="userDto">
+		select id, name, address, role, enabled, regdate
+		from hhuserinfo
+		where role = "EGG"
+	</select>
 	
 </mapper>
 

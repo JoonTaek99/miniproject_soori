@@ -29,13 +29,14 @@ function addReply()
                alert("통신오류ㅋ"+e);
             }
          });
+		document.getElementById('exampleFormControlTextarea1').value='';
    
-   const addValue= document.getElementById('exampleFormControlTextarea1').value;
-   const li = document.createElement("li");
-   li.setAttribute('id', exampleFormControlTextarea1);
-   const textNode= document.createTextNode(addValue);
-   li.appendChild(textNode);
-   document.getElementById('reply').appendChild(li);
+//    const addValue= document.getElementById('exampleFormControlTextarea1').value;
+//    const li = document.createElement("li");
+//    li.setAttribute('id', exampleFormControlTextarea1);
+//    const textNode= document.createTextNode(addValue);
+//    li.appendChild(textNode);
+//    document.getElementById('reply').appendChild(li);
 }
 
 function showReply(){
@@ -48,6 +49,7 @@ function showReply(){
       async:false,
       data:{"seq":seq},
       success:function(data){
+    	  document.getElementById('reply').innerHTML="";
          for (var i = 0; i < data.list.length; i++) {
           const addValue= data.list[i].id + " | " + data.list[i].content;
          const li = document.createElement("li");
@@ -143,7 +145,7 @@ li{
                      <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
                      <input type="text" class="form-control ml-2" id="replyId" th:value="${session.mdto.id}" readonly>
                   </div>
-                  <input type="text" class="form-control" id="exampleFormControlTextarea1" name="text">
+                  <input type="text" class="form-control" id="exampleFormControlTextarea1" name="text" />
                   <button id="add" type="button" class="btn btn-dark mt-3" onclick="addReply()">댓글 달기</button>
                   <button type="button" class="btn btn-dark mt-3" onclick="showReply()">댓글 보기</button>
                   <ul id='reply'></ul>

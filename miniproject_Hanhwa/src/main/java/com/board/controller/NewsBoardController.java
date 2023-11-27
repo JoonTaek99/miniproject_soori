@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +32,11 @@ import com.board.dtos.FileBoardDto;
 import com.board.dtos.NewsBoardDto;
 import com.board.service.FileService;
 import com.board.service.NewsBoardService;
+import com.board.utils.Paging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/news")
@@ -42,10 +48,29 @@ public class NewsBoardController {
    @Autowired
    private FileService fileService;
    
+   
+
    @GetMapping(value = "/boardList")
-   public String NewsBoardList(Model model) {
+   public String NewsBoardList(Model model,HttpServletRequest request,HttpServletResponse response,String pnum) {
       System.out.println("글목록 보기");
-      List<NewsBoardDto> list = newsBoardService.getAllList();
+      
+     HttpSession session=request.getSession();
+      if(pnum==null) {
+         pnum=(String)session.getAttribute("pnum");//현재 조회중인 페이지번호
+      }else {
+         //새로 페이지를 요청할 경우 세션에 저장
+         session.setAttribute("pnum", pnum);
+      }
+     //페이지 수 구하기 
+      int pcount=newsBoardService.getPCount();
+     model.addAttribute("pcount", pcount);
+            
+     //---페이지에 페이징 처리 기능 추가
+     //필요한 값: 페이지수, 페이지번호, 페이지범위(페이지수)
+     Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 10);
+     model.addAttribute("pMap", map);
+      
+      List<NewsBoardDto> list = newsBoardService.getAllList(pnum);
       model.addAttribute("list", list);
       model.addAttribute("delBoardCommand", new NewsDelBoardCommand());
       
@@ -113,10 +138,10 @@ public class NewsBoardController {
    @RequestMapping(value="mulDel",method = {RequestMethod.GET, RequestMethod.POST})
    public String mulDel(@Validated NewsDelBoardCommand delBoardCommand
                    ,BindingResult result
-                      , Model model) {
+                      , Model model,String pnum) {
       if(result.hasErrors()) {
          System.out.println("최소하나 체크하기");
-         List<NewsBoardDto> list=newsBoardService.getAllList();
+         List<NewsBoardDto> list=newsBoardService.getAllList(pnum);
          model.addAttribute("list", list);
          return "news/newsboardList";
       }

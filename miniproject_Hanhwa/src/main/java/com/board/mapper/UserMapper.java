@@ -1,5 +1,7 @@
 package com.board.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.board.dtos.UserDto;
@@ -19,4 +21,6 @@ public interface UserMapper {
 	public boolean updateUser(UserDto dto);
 	
 	public boolean delUser(String id);
+	
+	public List<UserDto> getAllUserList();
 }

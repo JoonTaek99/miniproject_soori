@@ -1,6 +1,7 @@
 package com.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +10,7 @@ import com.board.dtos.FreeBoardDto;
 @Mapper
 public interface FreeBoardMapper {
     // 글 목록
-    public List<FreeBoardDto> getAllList();
+    public List<FreeBoardDto> getAllList(Map<String,String>map);
     
     // 글 상세 조회
     public FreeBoardDto getBoard(int board_seq);
@@ -26,4 +27,7 @@ public interface FreeBoardMapper {
     
     // 조회수
     public boolean readCount(int seq);
+    
+  //페이징
+    public int getPCount();
 }
