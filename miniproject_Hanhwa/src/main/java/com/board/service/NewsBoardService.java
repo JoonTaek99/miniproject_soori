@@ -112,7 +112,6 @@ public class NewsBoardService {
     }
 
    public int getPCount() {
-      // TODO Auto-generated method stub
       return newsBoardMapper.getPCount();
    }
 }

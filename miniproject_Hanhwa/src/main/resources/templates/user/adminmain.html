@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-     layout:decorate="~{layouts/layout}">
+     layout:decorate="~{layouts/admin_layout}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,13 +11,19 @@ function allUserList(){
  }
 </script>
 <style type="text/css">
+.photo{
+	margin-top: 50px;
+}
 
 </style>
 </head>
 <body>
 <div layout:fragment="content">
 <h1>관리자페이지</h1>
-<button type="button" class="btn" onclick="allUserList()">유저리스트보기</button>
+<div style="text-align: center;">
+	<img class="photo" th:src="@{/css/X6NKNH2UTEZDME5NNNQ5MEX5CA.jpg}"  />
+	<p style="font-size: 50px;">상단의 메뉴바를 선택해서 서비스를 이용해주세요</p>
+</div>
 </div>
 </body>
 </html>

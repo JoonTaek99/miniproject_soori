@@ -81,8 +81,6 @@ public class CalService {
                 +Util.isTwo(insertCalCommand.getDate()+"")
                 +Util.isTwo(insertCalCommand.getHour()+"")
                 +Util.isTwo(insertCalCommand.getMin()+"");
-      // 202311151335 12자리
-      // 20231181110  11자리....ㅜㅜ
       
       //command --> dto 값 복사 
       CalDto dto=new CalDto();
@@ -91,11 +89,6 @@ public class CalService {
       dto.setMdate(mdate);
       
       int count=calmapper.insertCalBoard(dto);
-      
-      //예외발생코드 추가
-//      if(count>0) {
-//         throw new Exception("트랜젝션 실행됨");
-//      }
       
       return count>0?true:false;
    }

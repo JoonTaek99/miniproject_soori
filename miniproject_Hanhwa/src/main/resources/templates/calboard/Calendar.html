@@ -14,13 +14,16 @@
          border-top:1px solid gray;
          position: relative;
    }
-   #ctitle{text-align: center;}
+   #ctitle{
+/*          text-align: center; */
+         margin-left: 337px;
+   }
    .pen{ width:20px; height:20px;}
    .d{
       font-weight:bold;
       font-size:17px;
    }
-   #tbody > div > p{background-color:red; color:yellow;}
+   #tbody > div > p{background-color:rgb(255, 128, 0); color:black;}
    .cp{
       position: absolute;
       left: 20px;
@@ -28,8 +31,8 @@
       width:40px;
       height:40px;
       border-radius: 20px 20px 20px 1px;
-      color: yellow;
-      background-color: red;
+      color: white;
+      background-color: rgb(255, 128, 0);
       line-height: 40px;
       text-align: center;
       font-weight: bold;
@@ -45,7 +48,6 @@
          var date = aDate.text().trim(); // 일
          var yyyyMMdd = year+(month.length<2?"0"+month:month)
                               +(date.length<2?"0"+date:date); //8자리 만들기
-//         alert(yyyyMMdd+"아니야응아니야");
          if(aDate.nextAll("p").length>0){
             $.ajax({
                url:"/schedule/calCountAjax",
@@ -54,11 +56,10 @@
                dataType:"json", // 서버에서 전달받은 데이터 타입
                async:false, // ajax() 메서드가 비동기로 실행되는것을 막음 : false 설정
                success:function(data){ // 성공하면 데이터가 data 변수에 저장됨
-   //               alert(data.count+"응아니아니야");
                   aDate.after("<div class='cp'>"+data.count+"</div>");
                },
                error:function(){
-                  alert("통신실패ㅋ");
+                  alert("통신실패");
                }
             });
          }
@@ -74,14 +75,14 @@
       <h1>일정관리[달력보기]</h1>
       <div class="cal">
          <div id="ctitle">
-            <a th:href="@{/schedule/calendar(year=${calMap.year-1},month=${calMap.month})}">🙈</a>
-            <a th:href="@{/schedule/calendar(year=${calMap.year},month=${calMap.month-1})}">🙉</a>
+            <a th:href="@{/schedule/calendar(year=${calMap.year-1},month=${calMap.month})}">◀</a>
+            <a th:href="@{/schedule/calendar(year=${calMap.year},month=${calMap.month-1})}">◁</a>
             <span class="y" th:text="${calMap.year}"></span>
             <span>년</span>
             <span class="m" th:text="${calMap.month}"></span>
             <span>월</span>
-            <a th:href="@{/schedule/calendar(year=${calMap.year},month=${calMap.month+1})}">🙉</a>
-            <a th:href="@{/schedule/calendar(year=${calMap.year+1},month=${calMap.month})}">🙈</a>
+            <a th:href="@{/schedule/calendar(year=${calMap.year},month=${calMap.month+1})}">▷</a>
+            <a th:href="@{/schedule/calendar(year=${calMap.year+1},month=${calMap.month})}">▶</a>
          </div>
          <div id="thead">
             <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
@@ -95,9 +96,16 @@
                   <a class="d" th:text="${i}" th:style="'color:'+${@util.fontColor(i, calMap.dayOfWeek)}"
                      th:href="@{/schedule/calBoardList(year=${calMap.year},month=${calMap.month},date=${i})}"
                   ></a>
-                  <a th:href="@{/schedule/addCalBoardForm(year=${calMap.year},month=${calMap.month},date=${i})}">
-                     <img class="pen" th:src="@{/css/pen.png}"  />
-                  </a>
+                  <th:block th:if="${session.mdto.id=='admin'}">
+               <a th:href="@{/schedule/addCalBoardForm(year=${calMap.year},month=${calMap.month},date=${i})}">
+                                 <img class="pen" th:src="@{/css/pen.png}"  />
+                </a>
+              </th:block>
+             <th:block th:unless="${session.mdto.id=='admin'}">
+               <a th:href="@{/schedule/addCalBoardForm(year=${calMap.year},month=${calMap.month},date=${i})}">
+                                 <img class="pen" th:src="@{/css/pen.png}" style="display: none;" />
+                              </a>
+             </th:block>
                   [(${@util.getCalViewList(i,clist)})]
                </div>
             </th:block>
@@ -107,8 +115,6 @@
 </div>
 </body>
 </html>
-
-
 
 
 

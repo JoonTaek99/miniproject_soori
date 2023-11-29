@@ -48,8 +48,6 @@ public class NewsBoardController {
    @Autowired
    private FileService fileService;
    
-   
-
    @GetMapping(value = "/boardList")
    public String NewsBoardList(Model model,HttpServletRequest request,HttpServletResponse response,String pnum) {
       System.out.println("글목록 보기");
@@ -92,7 +90,7 @@ public class NewsBoardController {
                            Model model) throws IllegalStateException, IOException {
       
       if(result.hasErrors()) {
-         System.out.println("글을 모두 입력하라고");
+         System.out.println("글을 모두 입력해주세요");
          return "news/newsBoardInsertForm";
       }
       
@@ -100,14 +98,13 @@ public class NewsBoardController {
       
       return "redirect:/news/boardList";
    }
+   
    @GetMapping(value = "/newsBoardDetail")
    public String boardDetail(int board_seq, Model model, NewsUpdateBoardCommand newsUpdateBoardCommand) {
       NewsBoardDto dto = newsBoardService.getBoard(board_seq);
       model.addAttribute("updateBoardCommand", new NewsUpdateBoardCommand());
       model.addAttribute("dto",dto);
       int seq = newsUpdateBoardCommand.getBoard_seq();
-      
-      
       newsBoardService.readCount(seq);//조회수 증가
 
       return "news/newsBoardDetail";
@@ -118,10 +115,9 @@ public class NewsBoardController {
                               ,BindingResult result) {
       System.out.println("수정시작");
       if(result.hasErrors()) {
-         System.out.println("수정내용을 모두 입력하셈");
+         System.out.println("수정내용을 모두 입력해주세요");
          return "news/newsBoardDetail";
       }
-      
       newsBoardService.updateBoard(updateBoardCommand);
       
       return "redirect:/news/newsBoardDetail?board_seq="+updateBoardCommand.getBoard_seq();
@@ -156,17 +152,14 @@ public class NewsBoardController {
                        BindingResult result) throws Exception {
       System.out.println("댓글추가");
       if(result.hasErrors()) {
-         System.out.println("글을 모두 입력해야 함");
+         System.out.println("글을 모두 입력해야 합니다");
          return "news/NewsBoardDetail";
       }
       System.out.println(insertCommand);
-//      logger.info("탈출ㅋ");
       newsBoardService.insertReply(insertCommand);
       
-     // return "redirect:/schedule/calBoardDetail";
       return "";
    }
-   
 
    @ResponseBody
    @GetMapping(value = "/showReplyBoard")
@@ -180,6 +173,4 @@ public class NewsBoardController {
       
       return map;
    }
-   
-   
 }

@@ -26,14 +26,14 @@
       FROM (SELECT ROW_NUMBER() OVER(ORDER BY refer DESC,step) rn,
                    board_seq, id, title, content,                         regdate,refer,step,depth,
                    readcount,delflag
-               FROM hhboard) a
+               FROM hhboard where DELFLAG = 'N') a
       <where>
          <choose>
             <when test="board_seq!=null">
                AND board_seq=#{board_seq}
             </when>
             <otherwise>
-               AND CEIL(rn/10)=#{pnum} AND DELFLAG = 'N'
+               AND CEIL(rn/10)=#{pnum}
             </otherwise>
          </choose>
    </where> 

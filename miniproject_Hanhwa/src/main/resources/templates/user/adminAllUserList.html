@@ -6,6 +6,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+function allSel(bool){
+      var chks=document.getElementsByName("seq");// [seq,seq,seq,seq..]
+      for (var i = 0; i < chks.length; i++) {
+         chks[i].checked=bool;//각각의 체크박스에 체크여부를 true/false로 적용
+      }
+   }
+
+   function isCheck(){
+      if(confirm("정말 삭제 하시겠습니까?")){
+         return true;
+      }
+      return false;
+   }
 
 </script>
 <style type="text/css">
@@ -15,11 +28,14 @@
 <body>
 <div layout:fragment="content">
 <div class="contents">
+<form action="mulDel" method="post" th:object="${delUserCommand}" onsubmit="return isCheck()">
+
          <h1>관리자 페이지</h1>
          <h2>회원전체목록</h2>
          <div id="userAllList">
             <table class="table">
                <tr>
+                  <th><input type="checkbox" name="all" onclick="allSel(this.checked)" /></th>
                   <th>아이디</th>
                   <th>이름</th>
                   <th>주소</th>
@@ -34,17 +50,25 @@
                </th:block>
                <th:block th:unless="${#lists.isEmpty(list)}">
                   <tr th:each="dto:${list}">
+                     <td><input type="checkbox"  name="seq" th:field="*{id}" th:value="${dto.id}"/></td>
                      <td th:text="${dto.id}"></td>
                      <td th:text="${dto.name}"></td>
                      <td th:text="${dto.address}"></td>
                      <td th:text="${dto.role}"></td>
-                     <td th:text="${dto.enabled}==Y?'가입중':'탈퇴'"></td> 
+               <td>
+                  [[${dto.enabled}==Y?'가입중':'탈퇴']]
+                     </td> 
                      <td th:text="${#dates.format(dto.regdate, 'yyyy-MM-dd')}"></td> 
                   </tr>
                </th:block>
             </table>
-         </div>
+            <button type="submit" class="btn">탈퇴</button>
+           
+            </div>
+          </form>
       </div>
 </div>
+
+
 </body>
 </html>

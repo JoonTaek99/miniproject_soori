@@ -65,15 +65,13 @@ public class FreeBoardController {
      Map<String, Integer>map=Paging.pagingValue(pcount, pnum, 10);
      model.addAttribute("pMap", map);
       
-      
-      
-      
       List<FreeBoardDto> list=freeBoardService.getAllList(pnum);
       model.addAttribute("list", list);
       model.addAttribute("delBoardCommand", new NewsDelBoardCommand());
       
       return "free/freeboardList";
    }
+   
    @GetMapping(value = "/freeBoardInsert")
    public String boardInsertForm(Model model) {
       System.out.println("글추가폼 이동");
@@ -81,6 +79,7 @@ public class FreeBoardController {
       
       return "free/freeBoardInsertForm";
    }
+   
    @PostMapping(value = "/freeBoardInsert")
    public String boardInsert(@Validated NewsInsertBoardCommand insertBoardCommand,
                            BindingResult result, MultipartRequest multipartRequest,
@@ -96,6 +95,7 @@ public class FreeBoardController {
          
       return "redirect:/free/freeboardList";
    }   
+   
       @GetMapping(value = "/freeBoardDetail")
       public String boardDetail(int board_seq, Model model, NewsUpdateBoardCommand newsUpdateBoardCommand) {
          FreeBoardDto dto = freeBoardService.getBoard(board_seq);
@@ -108,6 +108,7 @@ public class FreeBoardController {
  
          return "free/freeBoardDetail";
       }
+      
       @PostMapping(value = "/freeBoardUpdate")
       public String boardUpdate(@Validated NewsUpdateBoardCommand updateBoardCommand
                                  ,BindingResult result) {
@@ -122,12 +123,14 @@ public class FreeBoardController {
          return "redirect:/free/freeBoardDetail?board_seq="+updateBoardCommand.getBoard_seq();
          
       }
+      
       @GetMapping(value = "/download")
       public void download(int file_seq, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
          UserFileBoardDto fdto = userfileService.getFileInfo(file_seq);
          
          userfileService.fileDownload(fdto.getOrigin_filename(),fdto.getStored_filename(),request,response);
       }
+      
       @RequestMapping(value="mulDel",method = {RequestMethod.GET, RequestMethod.POST})
       public String mulDel(@Validated NewsDelBoardCommand delBoardCommand
                       ,BindingResult result
@@ -142,6 +145,7 @@ public class FreeBoardController {
          System.out.println("글삭제함");
          return "redirect:/free/freeboardList";
       }
+      
       @ResponseBody
       @GetMapping(value = "/addReplyBoard")
       public String addCalReply(@Validated InsertReplyCommand insertCommand,
@@ -152,14 +156,10 @@ public class FreeBoardController {
             return "news/NewsBoardDetail";
          }
          System.out.println(insertCommand);
-//         logger.info("탈출ㅋ");
          freeBoardService.insertReply(insertCommand);
-         
-        // return "redirect:/schedule/calBoardDetail";
          return "";
       }
       
-
       @ResponseBody
       @GetMapping(value = "/showReplyBoard")
       public Map<String, List<FreeBoardDto>> NewsBoardList(@Validated InsertCalReplyCommand insertCalCommand, BindingResult result,  Model model, int seq) throws Exception {

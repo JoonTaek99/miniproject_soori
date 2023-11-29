@@ -10,22 +10,26 @@ public class UserUpdateCommand {
 	private String role;
 	
 	private String address;
+	
+	private String enabled;
 		
 	public UserUpdateCommand() {
 		super();
 	}
 
-	public UserUpdateCommand(String id, String name, String role, String address) {
+	public UserUpdateCommand(String id, String name, String role, String address, String enabled) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.role = role;
 		this.address = address;
+		this.enabled = enabled;
 	}
 
 	@Override
 	public String toString() {
-		return "UserUpdateCommand [id=" + id + ", name=" + name + ", role=" + role + ", address=" + address + "]";
+		return "UserUpdateCommand [id=" + id + ", name=" + name + ", role=" + role + ", address=" + address
+				+ ", enabled=" + enabled + "]";
 	}
 
 	public String getId() {
@@ -59,6 +63,15 @@ public class UserUpdateCommand {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public String getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+
 	
 	
 	

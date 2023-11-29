@@ -22,18 +22,18 @@
    
    
    <select id="getAllList" parameterType="map" resultType="FreeBoardDto">
-      SELECT rn,BOARD_SEQ, ID, TITLE, CONTENT, REGDATE, refer, step, depth, readcount, delflag
-      FROM (SELECT ROW_NUMBER() OVER(ORDER BY refer DESC,step) rn,
-                   board_seq, id, title, content,                         regdate,refer,step,depth,
+      SELECT rn, BOARD_SEQ, ID, TITLE, CONTENT, REGDATE, refer,  readcount, delflag
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY refer DESC) rn,
+                   board_seq, id, title, content, regdate,refer,step,depth,
                    readcount,delflag
-               FROM hhuserboard) a
+               FROM hhuserboard where DELFLAG = 'N') a
       <where>
          <choose>
             <when test="board_seq!=null">
                AND board_seq=#{board_seq}
             </when>
             <otherwise>
-               AND CEIL(rn/10)=#{pnum} AND DELFLAG = 'N'
+               AND CEIL(rn/10) = #{pnum} 
             </otherwise>
          </choose>
    </where> 
@@ -54,7 +54,7 @@
       INSERT INTO HHUSERBOARD
       VALUES(NULL,#{id},#{title},#{content},SYSDATE(),
       (SELECT NVL(MAX(refer),0)+1 
-      FROM HHBOARD alias_for_subquery),
+      FROM HHUSERBOARD alias_for_subquery),
        0,0,0,'N')
    </insert>
    

@@ -6,17 +6,17 @@ public class NewsUpdateBoardCommand {
 
 private int board_seq;
 	
-	@NotBlank(message = "제목 치라")
+	@NotBlank(message = "제목을 입력해주세요")
 	private String title;
-	@NotBlank(message = "내용 치라")
+	@NotBlank(message = "내용을 입력해주세요")
 	private String content;
 	
 	public NewsUpdateBoardCommand() {
 		super();
 	}
 	
-	public NewsUpdateBoardCommand(int board_seq, @NotBlank(message = "제목 치라") String title,
-			@NotBlank(message = "내용 치라") String content) {
+	public NewsUpdateBoardCommand(int board_seq, @NotBlank(message = "제목을 입력해주세요") String title,
+			@NotBlank(message = "내용을 입력해주세요") String content) {
 		super();
 		this.board_seq = board_seq;
 		this.title = title;

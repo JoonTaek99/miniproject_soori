@@ -45,7 +45,6 @@ public class CalController {
       logger.info("달력보기"); 
       
       //달력에서 일일별 일정목록 구하기
-      
       String year=request.getParameter("year");
       String month=request.getParameter("month");
       
@@ -66,6 +65,7 @@ public class CalController {
       
       return "calboard/Calendar";
    }
+   
    @GetMapping(value = "/addCalBoardForm")
    public String addCalBoardForm(Model model, InsertCalCommand insertCalCommand) {
       logger.info("일정추가폼이동");
@@ -74,6 +74,7 @@ public class CalController {
       model.addAttribute("insertCalCommand", insertCalCommand);
       return "calboard/addCalBoardForm";
    }
+   
    @PostMapping(value = "/addCalBoard")
    public String addCalBoard(@Validated InsertCalCommand insertCalCommand,
                        BindingResult result) throws Exception {
@@ -83,9 +84,7 @@ public class CalController {
          System.out.println("글을 모두 입력해야 함");
          return "calboard/addCalBoardForm";
       }
-      
       calService.insertCalBoard(insertCalCommand);
-      
       return "redirect:/schedule/calendar?year="+insertCalCommand.getYear()
                               +"&month="+insertCalCommand.getMonth();
    }
@@ -95,9 +94,9 @@ public class CalController {
                      , HttpServletRequest request
                      , Model model) {
       logger.info("일정목록보기");
-//      HttpSession session=request.getSession();
-//      String id=session.getAttribute("id");
-      String id="admin";//임시로 id 저장
+      
+      HttpSession session1 = request.getSession();
+      String id = (String)session1.getAttribute("id");
       
       //command 유효값 처리를 위해 기본 생성해서 보내줌
 //      model.addAttribute("deleteCalCommand", new DeleteCalCommand());
@@ -141,8 +140,7 @@ public class CalController {
          System.out.println("최소 하나 이상 체크하기");
          
          HttpSession session=request.getSession();
-//         String id=session.getAttribute("id");
-         String id="ljt";//임시로 id 저장
+         String id=(String)session.getAttribute("id");
          
          //session에 저장된 ymd 값은 목록 조회할때 추가되는 코드임
          Map<String, String>map=(Map<String, String>)session.getAttribute("ymdMap");
@@ -206,14 +204,12 @@ public class CalController {
                        BindingResult result) throws Exception {
       logger.info("댓글추가하기");
       if(result.hasErrors()) {
-         System.out.println("글을 모두 입력해야 함");
+         System.out.println("글을 모두 입력해야 합니다");
          return "calboard/calBoardDetail";
       }
-      logger.info("탈출ㅋ");
       calService.insertCalReply(insertCalCommand);
       
-     // return "redirect:/schedule/calBoardDetail";
-      return "zz";
+      return "";
    }
    
    @ResponseBody

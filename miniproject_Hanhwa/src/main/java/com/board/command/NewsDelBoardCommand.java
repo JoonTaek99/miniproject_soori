@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class NewsDelBoardCommand {
 
-	@NotEmpty(message = "최소 하나는 눌러야될거아니야")
+	@NotEmpty(message = "최소 하나이상 선택해주세요")
 	   private String[] seq;
 	   
 	   public NewsDelBoardCommand() {
@@ -14,7 +14,7 @@ public class NewsDelBoardCommand {
 	      // TODO Auto-generated constructor stub
 	   }
 
-	   public NewsDelBoardCommand(@NotEmpty(message = "최소하나 눌러") String[] seq) {
+	   public NewsDelBoardCommand(@NotEmpty(message = "최소 하나이상 선택해주세요") String[] seq) {
 	      super();
 	      this.seq = seq;
 	   }

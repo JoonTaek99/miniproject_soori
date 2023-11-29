@@ -43,7 +43,7 @@ th, td{
       </tr>   
       <th:block th:if="${#lists.isEmpty(list)}">
          <tr>
-            <td colspan="7" style="text-align: center;">---작성된 글이 없어유---</td>
+            <td colspan="7" style="text-align: center;">작성된 글이 없습니다</td>
          </tr>
       </th:block>
       <th:block th:unless="${#lists.isEmpty(list)}">
@@ -66,7 +66,7 @@ th, td{
               <ul class="pagination">
                 <li ><a th:href="@{/free/freeboardList(pnum=${pMap.prePageNum})}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
                 <th:block th:each="i:${#numbers.sequence(pMap.startPage,pMap.endPage)}">
-                   <li th:class="${session.pnum}==${i}?'active':''"><a th:href="@{/free/freeboardLists(pnum=${i})}">[[${i}]]<span class="sr-only">(current)</span></a></li>
+                   <li th:class="${session.pnum}==${i}?'active':''"><a th:href="@{/free/freeboardList(pnum=${i})}">[[${i}]]<span class="sr-only">(current)</span></a></li>
                 </th:block> 
                 <li ><a th:href="@{/free/freeboardList(pnum=${pMap.nextPageNum})}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
               </ul>

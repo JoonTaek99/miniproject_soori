@@ -10,10 +10,10 @@ public class NewsInsertBoardCommand {
 
 	private String id;
 	
-	@NotBlank(message = "제목 치라")
+	@NotBlank(message = "제목을 입력해주세요")
 	private String title;
 	
-	@NotBlank(message = "내용 치라")
+	@NotBlank(message = "내용을 입력해주세요")
 	private String content;
 
 	private String delflag;
@@ -29,8 +29,8 @@ public class NewsInsertBoardCommand {
 		// TODO Auto-generated constructor stub
 	}
 
-	public NewsInsertBoardCommand(int seq, String id, @NotBlank(message = "제목 치라") String title,
-			@NotBlank(message = "내용 치라") String content, String delflag, Date regDate, int refer, int step, int depth,
+	public NewsInsertBoardCommand(int seq, String id, @NotBlank(message = "제목을 입력해주세요") String title,
+			@NotBlank(message = "내용을 입력해주세요") String content, String delflag, Date regDate, int refer, int step, int depth,
 			int readCount) {
 		super();
 		this.seq = seq;

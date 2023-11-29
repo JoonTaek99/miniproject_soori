@@ -43,7 +43,7 @@
          </tr>
          <th:block th:if="${#lists.isEmpty(list)}">
             <tr>
-               <td colspan="4" style="text-align: center" >작성된 일정이 없습니다람쥐</td>
+               <td colspan="4" style="text-align: center" >작성된 일정이 없습니다</td>
             </tr>
          </th:block>
          <th:block th:unless="${#lists.isEmpty(list)}">
@@ -73,8 +73,6 @@
                            th:onclick="|location.href='@{/schedule/calendar(year=${session.ymdMap.year},month=${session.ymdMap.month})}'|">
                     <span class="glyphicon glyphicon-calendar" ></span>
                   </button>
-<!--                   <span class="errorField" th:if="${#fields.hasErrors('seq')}" -->
-<!--                                      th:errors="*{seq}"></span> -->
             </td>
          </tr>
       </table>

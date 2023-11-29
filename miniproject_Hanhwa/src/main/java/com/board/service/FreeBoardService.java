@@ -110,7 +110,6 @@ public class FreeBoardService {
        }
        
        public int getPCount() {
-    	      // TODO Auto-generated method stub
     	      return freeBoardMapper.getPCount();
     	   }
        
